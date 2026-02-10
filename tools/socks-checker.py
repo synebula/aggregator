@@ -803,6 +803,14 @@ class ProxyChecker:
                     else:
                         stats["failed"] += 1
 
+                    completed = stats["success"] + stats["failed"]
+                    if completed % 100 == 0 or completed == stats["total"]:
+                        remaining = stats["total"] - completed
+                        progress = (completed / stats["total"] * 100) if stats["total"] else 0.0
+                        print(
+                            f"💡 测试进度: {progress:.1f}% | 总数: {stats['total']} | 已完成: {completed} | 待测试: {remaining} | 可用: {stats['success']}"
+                        )
+
                 return result
 
         # 并发执行测试
